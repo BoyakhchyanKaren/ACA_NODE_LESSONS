@@ -13,17 +13,54 @@ The end index of the specified portion of the array. This is exclusive of the el
 */
 
 
-Array.prototype.mySlice = function (index1=0, index2=this.length-1) {
+Array.prototype.mySlice = function (index1, index2) {
     try {
         const newarr = [];
+        if ((index1 < 0 && index2 < 0) && index1 > index2) {
+            return newarr;
+        };
+        if (index1 < 0 && index2 < 0) {
+            index1 += this.length;
+            index2 += this.length;
+            for (let i = 0; i < this.length; i++) {
+                if (i >= index1 && i < index2) {
+                    newarr.push(this[i])
+                };
+            };
+            return newarr;
+        }
+        if (index2 < 0) {
+            index2 += this.length;
+        };
+        if(arguments.length === 1 && index1 < 0){
+            index1 +=this.length;
+            index2  = this.length;
+            for(let i=0; i<this.length; i++) {
+                if(i >= index1 && i <= index2){
+                    newarr.push(this[i]);
+                }
+            };
+            return newarr;
+        }else if(arguments.length === 1 && index1 > 0){
+            index2 = this.length;
+            for (let i = 0; i < this.length; i++) {
+                if (i >= index1 && i <= index2) {
+                    newarr.push(this[i])
+                };
+            };
+            return newarr;
+        }else if(arguments.length === 1 && !index1){
+            return this;
+        }
+
         for (let i = 0; i < this.length; i++) {
             if (i >= index1 && i < index2) {
                 newarr.push(this[i])
-            }
+            };
         };
         return newarr;
     } catch (e) {
         console.log("Something went wrong...!", e);
-    }
+    };
 };
 
